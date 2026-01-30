@@ -1,5 +1,6 @@
 import { ImageCarousel } from './ImageCarousel';
 import { MapPin, Film } from 'lucide-react';
+import { getGoogleMapsUrl } from '../utils/googleMaps';
 
 export function FilmFestival() {
   const filmImages = [
@@ -9,10 +10,6 @@ export function FilmFestival() {
   ];
 
   const cinemaLocation = 'The Revue Cinema, 400 Roncesvalles Ave, Toronto, ON';
-
-  const getGoogleMapsUrl = (location: string) => {
-    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
-  };
 
   return (
     <section id="film-festival" className="py-16 md:py-24 px-4">
