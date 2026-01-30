@@ -26,83 +26,222 @@ export function UpcomingEvents({ calendarId, title = 'Upcoming Events' }: Upcomi
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Mock Google Calendar API call
-    // In production, replace with actual API call:
-    // const response = await fetch(
-    //   `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=YOUR_API_KEY&timeMin=${new Date().toISOString()}&maxResults=10&singleEvents=true&orderBy=startTime`
-    // );
-    
     const fetchEvents = async () => {
       setLoading(true);
+      setError(null);
       
-      // Simulating API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Check if this is a real Google Calendar ID (contains @group.calendar.google.com or @gmail.com)
+      const isRealCalendar = calendarId.includes('@group.calendar.google.com') || calendarId.includes('@gmail.com');
       
-      // Mock data - replace with actual API response
-      let mockEvents: CalendarEvent[] = [];
-      
-      // Different mock events based on calendarId
-      if (calendarId === 'didi-calendar@example.com') {
-        mockEvents = [
-          {
-            id: '1',
-            title: 'DIDI: Opening Night',
-            start: '2026-02-15T19:30:00',
-            end: '2026-02-15T21:30:00',
-            location: 'The Underground Theatre, 123 Main St, Toronto, ON',
-            description: JSON.stringify({
-              body: '**Join us** for our spectacular opening night! \\n\\nExperience an evening of *laughter* and entertainment. \\n\\n- Doors open at 7:00 PM\\n- Show starts at 7:30 PM\\n- Refreshments available',
-              link: 'https://example.com/tickets/opening-night'
-            })
-          },
-          {
-            id: '2',
-            title: 'DIDI: Weekend Matinee',
-            start: '2026-02-22T14:00:00',
-            end: '2026-02-22T16:00:00',
-            location: 'The Underground Theatre, 123 Main St, Toronto, ON',
-            description: JSON.stringify({
-              body: 'A family-friendly afternoon performance perfect for all ages!',
-              link: 'https://example.com/tickets/weekend-matinee'
-            })
+      if (isRealCalendar) {
+        // Fetch public Google Calendar via ICS feed (no API key required)
+        try {
+          // Public Google Calendar ICS URL format
+          const icsUrl = `https://calendar.google.com/calendar/ical/${encodeURIComponent(calendarId)}/public/basic.ics`;
+          
+          // Try direct fetch first, then fallback to CORS proxies if needed
+          const corsProxies = [
+            '',  // Try direct fetch first (cleanest solution)
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?'
+          ];
+          
+          let icsData = '';
+          let lastError: Error | null = null;
+          
+          for (const proxy of corsProxies) {
+            try {
+              const url = proxy ? proxy + encodeURIComponent(icsUrl) : icsUrl;
+              const response = await fetch(url);
+              
+              if (response.ok) {
+                icsData = await response.text();
+                break;
+              } else {
+                lastError = new Error(`HTTP ${response.status}`);
+              }
+            } catch (err) {
+              lastError = err as Error;
+              continue;
+            }
           }
-        ];
-      } else if (calendarId === 'people-you-may-know-calendar@example.com') {
-        mockEvents = [
-          {
-            id: '1',
-            title: 'PYMK: Opening Night',
-            start: '2026-02-15T19:30:00',
-            end: '2026-02-15T21:30:00',
-            location: 'The Underground Theatre, 123 Main St, Toronto, ON',
-            description: JSON.stringify({
-              body: '**Join us** for our spectacular opening night! \\n\\nExperience an evening of *laughter* and entertainment. \\n\\n- Doors open at 7:00 PM\\n- Show starts at 7:30 PM\\n- Refreshments available',
-              link: 'https://example.com/tickets/opening-night'
-            })
-          },
-          {
-            id: '2',
-            title: 'PYMK: Weekend Matinee',
-            start: '2026-02-22T14:00:00',
-            end: '2026-02-22T16:00:00',
-            location: 'The Underground Theatre, 123 Main St, Toronto, ON',
-            description: JSON.stringify({
-              body: 'A family-friendly afternoon performance perfect for all ages!',
-              link: 'https://example.com/tickets/weekend-matinee'
-            })
+          
+          if (!icsData) {
+            throw new Error(`Unable to fetch calendar. Please ensure the calendar is set to public. Last error: ${lastError?.message || 'Unknown error'}`);
           }
-        ];
+          
+          // Parse ICS data
+          const calendarEvents = parseICSData(icsData);
+          
+          // Filter for upcoming events only
+          const now = new Date();
+          const upcomingEvents = calendarEvents
+            .filter(event => new Date(event.start) >= now)
+            .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())
+            .slice(0, 10); // Limit to 10 upcoming events
+          
+          setEvents(upcomingEvents);
+        } catch (err) {
+          console.error('Error fetching Google Calendar events:', err);
+          setError(err instanceof Error ? err.message : 'Failed to load events');
+          setEvents([]);
+        }
+      } else {
+        // Mock data for testing calendars
+        // Simulating API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        let mockEvents: CalendarEvent[] = [];
+        
+        // Different mock events based on calendarId
+        if (calendarId === 'didi-calendar@example.com') {
+          mockEvents = [
+            {
+              id: '1',
+              title: 'DIDI: Opening Night',
+              start: '2026-02-15T19:30:00',
+              end: '2026-02-15T21:30:00',
+              location: 'The Underground Theatre, 123 Main St, Toronto, ON',
+              description: JSON.stringify({
+                body: '**Join us** for our spectacular opening night! \\n\\nExperience an evening of *laughter* and entertainment. \\n\\n- Doors open at 7:00 PM\\n- Show starts at 7:30 PM\\n- Refreshments available',
+                link: 'https://example.com/tickets/opening-night'
+              })
+            },
+            {
+              id: '2',
+              title: 'DIDI: Weekend Matinee',
+              start: '2026-02-22T14:00:00',
+              end: '2026-02-22T16:00:00',
+              location: 'The Underground Theatre, 123 Main St, Toronto, ON',
+              description: JSON.stringify({
+                body: 'A family-friendly afternoon performance perfect for all ages!',
+                link: 'https://example.com/tickets/weekend-matinee'
+              })
+            }
+          ];
+        } else if (calendarId === 'people-you-may-know-calendar@example.com') {
+          mockEvents = [
+            {
+              id: '1',
+              title: 'PYMK: Opening Night',
+              start: '2026-02-15T19:30:00',
+              end: '2026-02-15T21:30:00',
+              location: 'The Underground Theatre, 123 Main St, Toronto, ON',
+              description: JSON.stringify({
+                body: '**Join us** for our spectacular opening night! \\n\\nExperience an evening of *laughter* and entertainment. \\n\\n- Doors open at 7:00 PM\\n- Show starts at 7:30 PM\\n- Refreshments available',
+                link: 'https://example.com/tickets/opening-night'
+              })
+            },
+            {
+              id: '2',
+              title: 'PYMK: Weekend Matinee',
+              start: '2026-02-22T14:00:00',
+              end: '2026-02-22T16:00:00',
+              location: 'The Underground Theatre, 123 Main St, Toronto, ON',
+              description: JSON.stringify({
+                body: 'A family-friendly afternoon performance perfect for all ages!',
+                link: 'https://example.com/tickets/weekend-matinee'
+              })
+            }
+          ];
+        }
+        // For grad-school-improv-calendar@example.com, keep mockEvents as empty array []
+        
+        setEvents(mockEvents);
       }
-      // For grad-school-improv-calendar@example.com, keep mockEvents as empty array []
       
-      setEvents(mockEvents);
       setLoading(false);
     };
 
     fetchEvents();
   }, [calendarId]);
+
+  // Function to parse ICS (iCalendar) data
+  const parseICSData = (icsText: string): CalendarEvent[] => {
+    const events: CalendarEvent[] = [];
+    const lines = icsText.split(/\r\n|\n|\r/);
+    
+    let currentEvent: Partial<CalendarEvent> | null = null;
+    let currentField = '';
+    
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim();
+      
+      // Handle multi-line values (lines starting with space or tab)
+      while (i + 1 < lines.length && (lines[i + 1].startsWith(' ') || lines[i + 1].startsWith('\t'))) {
+        i++;
+        line += lines[i].trim();
+      }
+      
+      if (line === 'BEGIN:VEVENT') {
+        currentEvent = { id: '', title: '', start: '', end: '' };
+      } else if (line === 'END:VEVENT' && currentEvent) {
+        if (currentEvent.id && currentEvent.title && currentEvent.start && currentEvent.end) {
+          events.push(currentEvent as CalendarEvent);
+        }
+        currentEvent = null;
+      } else if (currentEvent) {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex === -1) continue;
+        
+        const fullField = line.substring(0, colonIndex);
+        const value = line.substring(colonIndex + 1);
+        
+        // Extract field name (before any semicolon for parameters)
+        const field = fullField.split(';')[0];
+        
+        switch (field) {
+          case 'UID':
+            currentEvent.id = value;
+            break;
+          case 'SUMMARY':
+            currentEvent.title = value.replace(/\\,/g, ',').replace(/\\;/g, ';').replace(/\\n/g, '\n');
+            break;
+          case 'DTSTART':
+            currentEvent.start = parseICSDate(value, fullField);
+            break;
+          case 'DTEND':
+            currentEvent.end = parseICSDate(value, fullField);
+            break;
+          case 'LOCATION':
+            currentEvent.location = value.replace(/\\,/g, ',').replace(/\\;/g, ';').replace(/\\n/g, '\n');
+            break;
+          case 'DESCRIPTION':
+            currentEvent.description = value.replace(/\\,/g, ',').replace(/\\;/g, ';').replace(/\\n/g, '\n').replace(/\\\\n/g, '\n');
+            break;
+        }
+      }
+    }
+    
+    return events;
+  };
+
+  // Function to parse ICS date format to ISO string
+  const parseICSDate = (dateString: string, fullField: string): string => {
+    // Check if it's a date-only field (no time)
+    const isDateOnly = fullField.includes('VALUE=DATE');
+    
+    if (isDateOnly) {
+      // Format: YYYYMMDD
+      const year = dateString.substring(0, 4);
+      const month = dateString.substring(4, 6);
+      const day = dateString.substring(6, 8);
+      return `${year}-${month}-${day}T00:00:00`;
+    } else {
+      // Format: YYYYMMDDTHHMMSS or YYYYMMDDTHHMMSSZ
+      const year = dateString.substring(0, 4);
+      const month = dateString.substring(4, 6);
+      const day = dateString.substring(6, 8);
+      const hour = dateString.substring(9, 11);
+      const minute = dateString.substring(11, 13);
+      const second = dateString.substring(13, 15);
+      
+      return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+    }
+  };
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -209,6 +348,14 @@ export function UpcomingEvents({ calendarId, title = 'Upcoming Events' }: Upcomi
   return (
     <div className="bg-[#8B3838] rounded-lg p-8">
       <h3 className="text-2xl font-serif text-gray-200 mb-6">{title}</h3>
+      
+      {error && (
+        <div className="bg-[#5A1F1F] border-2 border-red-300 rounded-lg p-4 mb-6">
+          <p className="text-red-100 font-sans">
+            <strong>Error loading events:</strong> {error}
+          </p>
+        </div>
+      )}
       
       {events.length === 0 ? (
         <div className="text-center py-8">

@@ -91,7 +91,7 @@ export function Stage() {
                 </p>
               </div>
 
-              <UpcomingEvents calendarId="didi-calendar@example.com" title="Upcoming Shows" />
+              <UpcomingEvents calendarId="192cc8e3a88703ed79bf252b39aff1150bbfa6a16519834d7e46f1dc3150b673@group.calendar.google.com" title="Upcoming Shows" />
             </div>
           )}
 
