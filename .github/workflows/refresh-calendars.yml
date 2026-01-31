@@ -4,7 +4,7 @@ name: refresh-calendars
 on:
   schedule:
     # runs as a cron job on minutes 3, 16, 29, 42, 55 of every hour
-    - cron: '3/13 * * * *'
+    - cron: '3,18,33,48 * * * *'
 
 jobs:
   pull-calendars:
