@@ -1,0 +1,41 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Long Toque - DIDI
+X-WR-TIMEZONE:America/Vancouver
+X-WR-CALDESC:Public show calendar for DIDI.
+BEGIN:VEVENT
+DTSTART:20260221T023000Z
+DTEND:20260221T033000Z
+UID:623pn26knla78k17cumjj173tv@google.com
+CREATED:20260130T082040Z
+DESCRIPTION:{&quot\;body&quot\;:&quot\;This event is a test event.&quot\;\,
+ &quot\;link&quot\;:&quot\;<a href="https://www.google.com/url?q=https://www
+ .showpass.com&amp\;sa=D&amp\;source=calendar&amp\;usd=2&amp\;usg=AOvVaw3imd
+ UZXV7KagexeGpU7fnc" target="_blank">https://www.showpass.com</a>&quot\;}
+LAST-MODIFIED:20260130T082040Z
+LOCATION:Hotel At The Waldorf\, 1489 E Hastings St\, Vancouver\, BC V5L 5B6
+ \, Canada
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DIDI Test Event 2
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20260121T023000Z
+DTEND:20260121T033000Z
+UID:7t4bha8mpg1t3buuhdpb6kij97@google.com
+CREATED:20260130T081711Z
+DESCRIPTION:{"body":"This event is a test event."\,"link":"https://www.show
+ pass.com"}
+LAST-MODIFIED:20260130T081711Z
+LOCATION:Hotel At The Waldorf\, 1489 E Hastings St\, Vancouver\, BC V5L 5B6
+ \, Canada
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DIDI Test Event
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
