@@ -10,6 +10,7 @@ on:
 jobs:
   pull-calendars:
     runs-on: ubuntu-latest
+    permissions
     outputs:
       git_status: ${{ steps.git_status.outputs.status }}
     steps:
@@ -23,9 +24,14 @@ jobs:
           git status --porcelain | base64 | tee -a "$GITHUB_OUTPUT"
       # commit & push if calendar changes detected
       - if: ${{ steps.git_status.outputs.status != '' }}
+        name: Commit calendar updates
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git remote set-url origin https://g-whiz:${{ secrets.PAT }}@github.com/${{ github.repository }}
           git commit -a -m 'Updating show calendars.'
-          git push
+      - if: ${{ steps.git_status.outputs.status != '' }}
+        name: Push calendar updates
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.PAT }}
+          branch: ${{ github.ref }}
