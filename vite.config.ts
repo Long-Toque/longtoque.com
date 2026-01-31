@@ -56,5 +56,10 @@
     server: {
       port: 3000,
       open: true,
+      headers: {
+        'Access-Control-Allow-Origin': 'https://calendar.google.com/',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Private-Network': 'true'
+      }
     },
   });

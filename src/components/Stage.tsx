@@ -44,7 +44,7 @@ export function Stage() {
           </p>
         </>
       ),
-      calendarId: '192cc8e3a88703ed79bf252b39aff1150bbfa6a16519834d7e46f1dc3150b673@group.calendar.google.com'
+      calendarId: 'c29b66ae0b972444723049fd41751695442b047ff1f3499171fe0d8197637a89@group.calendar.google.com'
     },
     { 
       id: 'people-you-may-know', 
@@ -65,7 +65,7 @@ export function Stage() {
           </p>
         </>
       ),
-      calendarId: 'people-you-may-know-calendar@example.com'
+      calendarId: '65f7f0888c8e9ed5578b305e910991f2053e48720eee806474804b50b7812bd6@group.calendar.google.com'
     },
     { 
       id: 'grad-school-improv', 
@@ -86,7 +86,7 @@ export function Stage() {
           </p>
         </>
       ),
-      calendarId: 'grad-school-improv-calendar@example.com'
+      calendarId: '07e00c385d4669061a03e7ce2df94817c9b3b59d25fc956991739fe700820280@group.calendar.google.com'
     },
   ];
 

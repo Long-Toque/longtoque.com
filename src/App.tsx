@@ -1,7 +1,7 @@
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { Stage } from './components/Stage';
-import { FilmFestival } from './components/FilmFestival';
+import { FilmEx } from './components/FilmEx';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
 
@@ -12,7 +12,7 @@ export default function App() {
       <main>
         <Hero />
         <Stage />
-        <FilmFestival />
+        <FilmEx />
         <About />
       </main>
       <Footer />

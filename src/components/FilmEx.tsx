@@ -2,7 +2,7 @@ import { ImageCarousel } from './ImageCarousel';
 import { MapPin, Film } from 'lucide-react';
 import { getGoogleMapsUrl } from '../utils/googleMaps';
 
-export function FilmFestival() {
+export function FilmEx() {
   const filmImages = [
     'https://images.unsplash.com/photo-1739433437912-cca661ba902f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaW5lbWElMjBtb3ZpZSUyMHRoZWF0ZXJ8ZW58MXx8fHwxNzY5NjkzMDI4fDA&ixlib=rb-4.1.0&q=80&w=1080',
     'https://images.unsplash.com/photo-1765213310101-d0eed6a0682a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaWxtJTIwcHJvamVjdG9yJTIwdmludGFnZXxlbnwxfHx8fDE3Njk3MzgyMDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
