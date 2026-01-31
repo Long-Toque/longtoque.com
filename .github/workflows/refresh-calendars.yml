@@ -10,7 +10,6 @@ on:
 jobs:
   pull-calendars:
     runs-on: ubuntu-latest
-    permissions
     outputs:
       git_status: ${{ steps.git_status.outputs.status }}
     steps:
