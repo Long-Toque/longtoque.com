@@ -2,8 +2,9 @@
 #   and updates the Long Toque page if there are any changes.
 name: refresh-calendars
 on:
+  workflow_dispatch:
   schedule:
-    # runs as a cron job on minutes 3, 16, 29, 42, 55 of every hour
+    # runs as a cron job on minutes 3, 18, 33, 48 of every hour
     - cron: '3,18,33,48 * * * *'
 
 jobs:
