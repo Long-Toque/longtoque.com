@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Long Toque - PYMK
+X-WR-TIMEZONE:America/Vancouver
+X-WR-CALDESC:Public show calendar for People You May Know.
+BEGIN:VEVENT
+DTSTART:20260211T010000Z
+DTEND:20260211T020000Z
+DTSTAMP:20260131T045211Z
+UID:0ha3loei2cvt52h1u052grkaoc@google.com
+CREATED:20260130T082109Z
+DESCRIPTION:{&quot\;body&quot\;:&quot\;This event is a test event.&quot\;\,
+ &quot\;link&quot\;:&quot\;<a href="https://www.google.com/url?q=https://www
+ .showpass.com&amp\;sa=D&amp\;source=calendar&amp\;usd=2&amp\;usg=AOvVaw3imd
+ UZXV7KagexeGpU7fnc" target="_blank">https://www.showpass.com</a>&quot\;}
+LAST-MODIFIED:20260130T082109Z
+LOCATION:Little Mountain Gallery\, 110 Water St\, Vancouver\, BC V6B 1E5\, 
+ Canada
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:PYMK Test Event
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
