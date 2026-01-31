@@ -9,7 +9,6 @@ X-WR-CALDESC:Public show calendar for Grad School Improv
 BEGIN:VEVENT
 DTSTART:20260205T010000Z
 DTEND:20260205T020000Z
-DTSTAMP:20260131T045159Z
 UID:63qorbva59j79m25uavv0ra9sc@google.com
 CREATED:20260130T081918Z
 DESCRIPTION:{"body":"This event is a test event."\,"link":"https://www.show

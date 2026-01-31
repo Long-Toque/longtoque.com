@@ -9,7 +9,6 @@ X-WR-CALDESC:Public show calendar for People You May Know.
 BEGIN:VEVENT
 DTSTART:20260211T010000Z
 DTEND:20260211T020000Z
-DTSTAMP:20260131T045211Z
 UID:0ha3loei2cvt52h1u052grkaoc@google.com
 CREATED:20260130T082109Z
 DESCRIPTION:{&quot\;body&quot\;:&quot\;This event is a test event.&quot\;\,
