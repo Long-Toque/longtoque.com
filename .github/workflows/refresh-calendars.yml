@@ -18,7 +18,7 @@ jobs:
       - run: ./scripts/refresh-calendars.sh
       # use `git status` to determine if calendars have changed
       - id: git_status
-        run: git status --porcelain >> "$GITHUB_OUTPUT"
+        run: git status --porcelain | base64 >> "$GITHUB_OUTPUT"
       # commit & push if calendar changes detected
       - if: ${{ steps.git_status.outputs.status != '' }}
         run: |
