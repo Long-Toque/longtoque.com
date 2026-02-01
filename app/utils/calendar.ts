@@ -11,7 +11,7 @@ export interface CalendarEvent {
 
 export interface ParsedEventDescription {
   body: string;
-  link: string;
+  link?: string;
 }
 
 export const parseEventDescription = (descriptionB64?: string): ParsedEventDescription | null => {
@@ -22,10 +22,14 @@ export const parseEventDescription = (descriptionB64?: string): ParsedEventDescr
         Uint8Array.from(atob(descriptionB64), c => c.charCodeAt(0))
     );
     const description = JSON.parse(descriptionJSON);
-    if (description.body && description.link) {
-      return description;
+    if (typeof description.body !== 'string' || !description.body.trim()) {
+      return null;
     }
-    return null;
+    const link =
+      typeof description.link === 'string' && description.link.trim()
+        ? description.link
+        : undefined;
+    return { body: description.body, link };
   } catch (error) {
     // Some descriptions might not be b64-encoded JSON, which is fine
     return null;

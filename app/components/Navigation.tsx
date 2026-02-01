@@ -6,14 +6,14 @@ export function Navigation() {
   const [isStageOpen, setIsStageOpen] = useState(false);
 
   const handleSubsectionClick = (subsection: string) => {
-    // Navigate to stage section and set the active tab
-    window.location.hash = `stage-${subsection}`;
+    // Navigate to the home page stage section and set the active tab.
+    window.location.href = `/#stage-${subsection}`;
     setIsMenuOpen(false);
     setIsStageOpen(false);
   };
 
   const handleSectionClick = (section: string) => {
-    window.location.hash = section;
+    window.location.href = `/#${section}`;
     setIsMenuOpen(false);
   };
 
@@ -23,7 +23,7 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#home" className="flex items-center">
+            <a href="/#home" className="flex items-center">
               <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
                 <span className="text-[#8B3838] font-serif font-bold text-xl">LTC</span>
               </div>
@@ -44,7 +44,8 @@ export function Navigation() {
                 Stage
                 <ChevronDown size={16} className="group-hover:rotate-180 transition-transform duration-200" />
               </button>
-              <div className="absolute top-full left-0 mt-1 bg-[#6B2828] rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[200px]">
+              <div className="absolute top-full left-0 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[200px]">
+                <div className="bg-[#6B2828] rounded-md shadow-lg">
                 <button
                   onClick={() => handleSubsectionClick('didi')}
                   className="block w-full text-left px-4 py-2 text-white hover:bg-[#8B3838] transition-colors duration-200 font-sans first:rounded-t-md"
@@ -64,16 +65,17 @@ export function Navigation() {
                   Grad School Improv
                 </button>
               </div>
+              </div>
             </div>
 
             <a
-              href="#film-festival"
+              href="/#film-festival"
               className="text-white hover:text-gray-200 transition-colors duration-200 font-sans"
             >
               Film
             </a>
             <a
-              href="#about"
+              href="/#about"
               className="text-white hover:text-gray-200 transition-colors duration-200 font-sans"
             >
               About
@@ -134,14 +136,14 @@ export function Navigation() {
             </div>
 
             <a
-              href="#film-festival"
+              href="/#film-festival"
               className="block px-3 py-2 text-white hover:bg-[#8B3838] rounded-md transition-colors duration-200 font-sans"
               onClick={() => setIsMenuOpen(false)}
             >
               Film
             </a>
             <a
-              href="#about"
+              href="/#about"
               className="block px-3 py-2 text-white hover:bg-[#8B3838] rounded-md transition-colors duration-200 font-sans"
               onClick={() => setIsMenuOpen(false)}
             >

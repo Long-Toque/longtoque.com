@@ -1,6 +1,82 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { ImageCarousel } from './ImageCarousel';
 import { UpcomingEvents } from './UpcomingEvents';
+
+type StageTab = {
+  id: string;
+  label: string;
+  images: string[];
+  title: string;
+  content: ReactNode;
+  calendarId: string;
+};
+
+type TabButtonProps = {
+  id: string;
+  label: string;
+  isActive: boolean;
+  onSelect: (id: string) => void;
+};
+
+function TabButton({ id, label, isActive, onSelect }: TabButtonProps) {
+  return (
+    <button
+      onClick={() => onSelect(id)}
+      className={`px-6 py-3 font-sans transition-all duration-200 ${
+        isActive
+          ? 'bg-[#6B2828] text-white border-b-2 border-white'
+          : 'text-gray-200 hover:text-white hover:bg-[#6B2828]'
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+type StageTabsProps = {
+  tabs: StageTab[];
+  activeTab: string;
+  onSelect: (id: string) => void;
+};
+
+function StageTabs({ tabs, activeTab, onSelect }: StageTabsProps) {
+  return (
+    <div className="bg-[#8B3838] rounded-t-lg">
+      <div className="flex flex-wrap border-b border-[#6B2828]">
+        {tabs.map((tab) => (
+          <TabButton
+            key={tab.id}
+            id={tab.id}
+            label={tab.label}
+            isActive={activeTab === tab.id}
+            onSelect={onSelect}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+type TabContentProps = {
+  tab: StageTab;
+};
+
+function TabContent({ tab }: TabContentProps) {
+  return (
+    <div className="bg-[#6B2828] rounded-b-lg p-6 md:p-8">
+      <div className="space-y-8">
+        <ImageCarousel images={tab.images} />
+
+        <div className="text-white font-sans space-y-4">
+          <h3 className="text-2xl font-serif text-gray-200">{tab.title}</h3>
+          {tab.content}
+        </div>
+
+        <UpcomingEvents calendarId={tab.calendarId} title="Upcoming Shows and Events" />
+      </div>
+    </div>
+  );
+}
 
 export function Stage() {
   const [activeTab, setActiveTab] = useState('didi');
@@ -24,7 +100,7 @@ export function Stage() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const tabs = [
+  const tabs: StageTab[] = [
     { 
       id: 'didi', 
       label: 'DIDI',
@@ -92,7 +168,7 @@ export function Stage() {
     },
   ];
 
-  const activeTabData = tabs.find(tab => tab.id === activeTab) || tabs[0];
+  const activeTabData = tabs.find((tab) => tab.id === activeTab) || tabs[0];
 
   return (
     <section id="stage" className="py-16 md:py-24 px-4">
@@ -102,37 +178,10 @@ export function Stage() {
         </h2>
 
         {/* Tabs */}
-        <div className="bg-[#8B3838] rounded-t-lg">
-          <div className="flex flex-wrap border-b border-[#6B2828]">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-3 font-sans transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? 'bg-[#6B2828] text-white border-b-2 border-white'
-                    : 'text-gray-200 hover:text-white hover:bg-[#6B2828]'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        <StageTabs tabs={tabs} activeTab={activeTab} onSelect={setActiveTab} />
 
         {/* Tab Content */}
-        <div className="bg-[#6B2828] rounded-b-lg p-6 md:p-8">
-          <div className="space-y-8">
-            <ImageCarousel images={activeTabData.images} />
-            
-            <div className="text-white font-sans space-y-4">
-              <h3 className="text-2xl font-serif text-gray-200">{activeTabData.title}</h3>
-              {activeTabData.content}
-            </div>
-
-            <UpcomingEvents calendarId={activeTabData.calendarId} title="Upcoming Shows and Events" />
-          </div>
-        </div>
+        <TabContent tab={activeTabData} />
       </div>
     </section>
   );
