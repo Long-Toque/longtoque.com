@@ -44,8 +44,10 @@ export function FilmEx() {
                 that showcase the best of contemporary short-form cinema.
               </p>
               <p className="text-lg leading-relaxed">
-                Each exhibition features a curated selection of short films across various genres, followed by 
-                Q&A sessions with filmmakers and networking opportunities with fellow cinema enthusiasts.
+                In partnership with The Dunbar Theatre, The Long Toque Club is beginning an intake of shorts to be
+                screened before feature films.
+                We are currently seeking submissions for screening over a one-month period in late spring / early
+                summer 2026.
               </p>
             </div>
           </div>

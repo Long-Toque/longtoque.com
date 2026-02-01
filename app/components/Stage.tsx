@@ -58,10 +58,11 @@ export function Stage() {
       content: (
         <>
           <p className="leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Sed euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl.
+            People You May Know perform original improv formats every two months at The Little Mountain Gallery.
           </p>
           <p className="leading-relaxed">
-            Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Proin eget tortor risus.
+            They also host a free workshop (open to all skill levels) on the first Monday of every month.
+            Each month, a cast member designs a workshop that tackles a particular aspect of improv, so each workshop is wholly unique.
           </p>
         </>
       ),
@@ -79,10 +80,11 @@ export function Stage() {
       content: (
         <>
           <p className="leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.
+            Performing for over a decade, Grad School Improv has become a staple of Vancouver's underground comedy scene.
           </p>
           <p className="leading-relaxed">
-            Nulla porttitor accumsan tincidunt. Curabitur aliquet quam id dui posuere blandit. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Quisque velit nisi, pretium ut lacinia in, elementum id enim.
+            GSI performs on the third Friday of each month at The Little Mountain Gallery.
+            They perform improvised long-form theatre spoofs of current, popular movies and TV Shows.
           </p>
         </>
       ),

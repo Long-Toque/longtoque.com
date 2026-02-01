@@ -6,7 +6,10 @@ export function Hero() {
           Welcome to the Long Toque Club
         </h1>
         <p className="text-lg md:text-xl text-white font-sans leading-relaxed">
-          An exclusive community dedicated to excellence, tradition, and camaraderie.
+          We are a non-profit that supports the performing arts in Vancouver B.C.
+        </p>
+        <p className="text-lg md:text-xl text-white font-sans leading-relaxed">
+          Check out our featured and partner performances as well as opportunities to join up!
         </p>
       </div>
     </section>
