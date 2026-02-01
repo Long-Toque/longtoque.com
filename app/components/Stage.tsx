@@ -130,7 +130,7 @@ export function Stage() {
               {activeTabData.content}
             </div>
 
-            <UpcomingEvents calendarId={activeTabData.calendarId} title="Upcoming Shows" />
+            <UpcomingEvents calendarId={activeTabData.calendarId} title="Upcoming Shows and Events" />
           </div>
         </div>
       </div>
