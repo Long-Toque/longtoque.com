@@ -14,17 +14,20 @@ export interface ParsedEventDescription {
   link: string;
 }
 
-export const parseEventDescription = (description?: string): ParsedEventDescription | null => {
-  if (!description) return null;
+export const parseEventDescription = (descriptionB64?: string): ParsedEventDescription | null => {
+  if (!descriptionB64) return null;
   
   try {
-    const parsed = JSON.parse(description);
-    if (parsed.body && parsed.link) {
-      return parsed;
+    let descriptionJSON = new TextDecoder().decode(
+        Uint8Array.from(atob(descriptionB64), c => c.charCodeAt(0))
+    );
+    const description = JSON.parse(descriptionJSON);
+    if (description.body && description.link) {
+      return description;
     }
     return null;
   } catch (error) {
-    // Some descriptions might not be JSON, which is fine
+    // Some descriptions might not be b64-encoded JSON, which is fine
     return null;
   }
 };
